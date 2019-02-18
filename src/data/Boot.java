@@ -39,26 +39,28 @@ public class Boot {
         };
 
         TileGrid grid = new TileGrid("map");
+        EntityGrid entities = new EntityGrid("entityMap");
 
         Entity e = new Entity(LoadTexture("player"),640,480,64,64,3);
-        Entity tree = new Entity(LoadTexture("tree"),5*64,4*64,64,64,0);
+        //Entity tree = new Entity(LoadTexture("tree"),5*64,4*64,64,64,0);
 
         while (!Display.isCloseRequested()) {
             Clock.update();
 
 
             grid.Draw();
+            entities.Draw();
             e.Draw();
             e.Update();
 
-            tree.Draw();
-            tree.Update();
+           // tree.Draw();
+           // tree.Update();
 
             Display.update();
             Display.sync(60);
 
         }//grid.load("map");
-        grid.save("map");
+       // grid.save("map");
     }
 
     public static void main(String[] args) {

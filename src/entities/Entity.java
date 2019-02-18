@@ -66,4 +66,92 @@ public class Entity {
     public float getY(){
         return y;
     }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public float getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(float speed) {
+        this.speed = speed;
+    }
+
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public void setY(float y) {
+        this.y = y;
+    }
+
+    public float getMouseX() {
+        return mouseX;
+    }
+
+    public void setMouseX(float mouseX) {
+        this.mouseX = mouseX;
+    }
+
+    public float getMouseY() {
+        return mouseY;
+    }
+
+    public void setMouseY(float mouseY) {
+        this.mouseY = mouseY;
+    }
+
+    public float getTolerance() {
+        return tolerance;
+    }
+
+    public void setTolerance(float tolerance) {
+        this.tolerance = tolerance;
+    }
+
+    public Texture getTexture() {
+        return texture;
+    }
+
+    public void setTexture(Texture texture) {
+        this.texture = texture;
+    }
+
+    public Tile getStartTile() {
+        return startTile;
+    }
+
+    public void setStartTile(Tile startTile) {
+        this.startTile = startTile;
+    }
+
+    public boolean isFirst() {
+        return first;
+    }
+
+    public void setFirst(boolean first) {
+        this.first = first;
+    }
+
+    public boolean isMovement() {
+        return movement;
+    }
+
+    public void setMovement(boolean movement) {
+        this.movement = movement;
+    }
 }
