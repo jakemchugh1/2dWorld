@@ -1,10 +1,13 @@
 package data;
 
+import collisions.CollisionBox;
 import entities.Entity;
+import entities.Player;
 import helpers.Clock;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
+import org.lwjgl.util.vector.Vector2f;
 import org.newdawn.slick.opengl.Texture;
 
 import static data.TileType.*;
@@ -41,8 +44,8 @@ public class Boot {
         TileGrid grid = new TileGrid("map");
         EntityGrid entities = new EntityGrid("entityMap");
 
-        Entity e = new Entity(LoadTexture("player"),640,480,64,64,3);
-        //Entity tree = new Entity(LoadTexture("tree"),5*64,4*64,64,64,0);
+        Player player = new Player(LoadTexture("boston terrier"),640,480,64,64,3);
+        Creator creator = new Creator(entities, grid);
 
         while (!Display.isCloseRequested()) {
             Clock.update();
@@ -50,8 +53,16 @@ public class Boot {
 
             grid.Draw();
             entities.Draw();
-            e.Draw();
-            e.Update();
+            player.Draw();
+            //testing collisions
+            for (Entity entity: entities.getEntityList()){
+                if(entity.hasCollisions()){
+                    player.checkCollisions(entity.getCollisions());
+                }
+            }
+
+            player.Update();
+            creator.CheckInputs();
 
            // tree.Draw();
            // tree.Update();
@@ -60,7 +71,10 @@ public class Boot {
             Display.sync(60);
 
         }//grid.load("map");
-       // grid.save("map");
+        grid = creator.getMap();
+        creator.getEntityGrid().save("entityMap");
+        grid.save("map");
+        //entities.save("entityMap");
     }
 
     public static void main(String[] args) {

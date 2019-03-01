@@ -1,63 +1,63 @@
 package entities;
 
+import collisions.Collision;
+import collisions.CollisionBox;
 import data.Tile;
 import org.newdawn.slick.opengl.Texture;
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.input.Mouse;
 
 import static helpers.Artist.DrawQuadTex;
-import static helpers.Clock.Delta;
 
 public class Entity {
     private int width, height;
 
-    private float speed, x, y;
+    private float x, y;
     private float mouseX, mouseY;
-    private float tolerance;
+    private Vector2f position;
 
     Texture texture;
     private Tile startTile;
-    private boolean first = true;
-    private boolean movement = false;
 
-    public Entity(Texture texture, float x, float y, int width, int height, float speed){
+    private boolean hasCollisions;
+
+    private Collision collisions;
+
+    public Entity(Texture texture, float x, float y, int width, int height, boolean hasCollisions){
         this.texture = texture;
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        this.speed = speed;
-        tolerance = 1.5f;
+        position = new Vector2f(x,y);
+        position.x = x+32;
+        position.y = y+32;
+        position = new Vector2f(x,y);
+        this.hasCollisions = hasCollisions;
+        collisions = new CollisionBox(64, position);
+
+
+
+    }
+    public Entity(Texture texture, float x, float y, int width, int height){
+        this.texture = texture;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        position = new Vector2f(x,y);
+        position.x = x+32;
+        position.y = y+32;
+        hasCollisions = false;
+        collisions = new CollisionBox(64, position);
+
 
     }
     public void Draw(){
         DrawQuadTex(texture, x, y, width, height);
     }
 
-    public void Update(){
 
-
-        if(first){
-            first = false;
-        }else{
-            if(Mouse.isButtonDown(0))Location();
-            if(movement)Move();
-        }
-    }
-    private void Move(){
-        if((mouseX-tolerance<x)&&(x<mouseX+tolerance)&&(mouseY-tolerance<y)&&(y<mouseY+tolerance)) movement = false;
-        else {
-            float adj = mouseX - x;
-            float opp = mouseY - y;
-            double magnitude = Math.sqrt(((adj * adj) + (opp * opp)));
-            x = (float) (x + (adj / magnitude) * speed);
-            y = (float) (y + (opp / magnitude) * speed);
-        }
-    }
-    private void Location(){
-        movement = true;
-        mouseX = Mouse.getX()-32;
-        mouseY = 960-Mouse.getY()-32;
-    }
 
     public float getX(){
         return x;
@@ -81,14 +81,6 @@ public class Entity {
 
     public void setHeight(int height) {
         this.height = height;
-    }
-
-    public float getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(float speed) {
-        this.speed = speed;
     }
 
     public void setX(float x) {
@@ -115,14 +107,6 @@ public class Entity {
         this.mouseY = mouseY;
     }
 
-    public float getTolerance() {
-        return tolerance;
-    }
-
-    public void setTolerance(float tolerance) {
-        this.tolerance = tolerance;
-    }
-
     public Texture getTexture() {
         return texture;
     }
@@ -139,19 +123,23 @@ public class Entity {
         this.startTile = startTile;
     }
 
-    public boolean isFirst() {
-        return first;
+    public Vector2f getPosition() {
+        return position;
     }
 
-    public void setFirst(boolean first) {
-        this.first = first;
+    public void setPosition(Vector2f position){
+        this.position = position;
     }
 
-    public boolean isMovement() {
-        return movement;
+    public Collision getCollisions() {
+        return collisions;
     }
 
-    public void setMovement(boolean movement) {
-        this.movement = movement;
+    public void setCollisions(Collision collisions) {
+        this.collisions = collisions;
+    }
+
+    public boolean hasCollisions() {
+        return hasCollisions;
     }
 }

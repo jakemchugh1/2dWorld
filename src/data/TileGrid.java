@@ -66,8 +66,22 @@ public class TileGrid {
         }
     }
 
-    public void SetTile(int xCoord, int yCoord, TileType type){
-        map[xCoord][yCoord] = new Tile(xCoord * 64, yCoord * 64, 64, 64, type);
+    public void SetTile(int xCoord, int yCoord, int type){
+        saved[yCoord][xCoord] = type;
+        switch(saved[yCoord][xCoord]){
+            case 0:
+                map[xCoord][yCoord] = new Tile(xCoord*64, yCoord*64, 64, 64, TileType.Empty);
+                break;
+            case 1:
+                map[xCoord][yCoord] = new Tile(xCoord*64, yCoord*64, 64, 64, TileType.Grass);
+                break;
+            case 2:
+                map[xCoord][yCoord] = new Tile(xCoord*64, yCoord*64, 64, 64, TileType.Water);
+                break;
+            case 3:
+                map[xCoord][yCoord] = new Tile(xCoord*64, yCoord*64, 64, 64, TileType.Wood);
+                break;
+        }
     }
 
     public Tile GetTile(int xCoord, int yCoord){
