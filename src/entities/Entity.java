@@ -30,11 +30,11 @@ public class Entity {
         this.width = width;
         this.height = height;
         position = new Vector2f(x,y);
-        position.x = x+32;
-        position.y = y+32;
+        position.x = x+(width/2);
+        position.y = y+(height/2);
         position = new Vector2f(x,y);
         this.hasCollisions = hasCollisions;
-        collisions = new CollisionBox(64, position);
+        collisions = new CollisionBox(width, position);
 
 
 
@@ -46,10 +46,10 @@ public class Entity {
         this.width = width;
         this.height = height;
         position = new Vector2f(x,y);
-        position.x = x+32;
-        position.y = y+32;
+        position.x = x+(width/2);
+        position.y = y+(height/2);
         hasCollisions = false;
-        collisions = new CollisionBox(64, position);
+        collisions = new CollisionBox(width, position);
 
 
     }

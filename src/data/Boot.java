@@ -4,11 +4,16 @@ import collisions.CollisionBox;
 import entities.Entity;
 import entities.Player;
 import helpers.Clock;
+import entities.*;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.util.vector.Vector2f;
 import org.newdawn.slick.opengl.Texture;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import static data.TileType.*;
 import static helpers.Artist.*;
@@ -42,27 +47,30 @@ public class Boot {
         };
 
         TileGrid grid = new TileGrid("map");
-        EntityGrid entities = new EntityGrid("entityMap");
+        HashSet<Entity> entitySet = new HashSet<>();
+        entitySet.add(new Entity(LoadTexture("tree"), 128, 128, 64, 64, true));
 
         Player player = new Player(LoadTexture("boston terrier"),640,480,64,64,3);
-        Creator creator = new Creator(entities, grid);
+        EntityManager manager = new EntityManager(entitySet);
 
         while (!Display.isCloseRequested()) {
             Clock.update();
 
 
             grid.Draw();
-            entities.Draw();
+            //entities.Draw();
             player.Draw();
             //testing collisions
-            for (Entity entity: entities.getEntityList()){
+            for (Entity entity: entitySet){
+                entity.Draw();
                 if(entity.hasCollisions()){
                     player.checkCollisions(entity.getCollisions());
                 }
             }
 
             player.Update();
-            creator.CheckInputs();
+            manager.CheckInputs();
+            entitySet = manager.getEntitySet();
 
            // tree.Draw();
            // tree.Update();
@@ -71,9 +79,7 @@ public class Boot {
             Display.sync(60);
 
         }//grid.load("map");
-        grid = creator.getMap();
-        creator.getEntityGrid().save("entityMap");
-        grid.save("map");
+        //grid.save("map");
         //entities.save("entityMap");
     }
 
